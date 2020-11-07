@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Images>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="soundtrack-grid">
+    <div class="row">
+        <div class="col-md-8">
+            <h2> <b>Trending Soundtracks</b></h2>
+        <div id="musicSlider" class="carousel slide bounce" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner">
+                @{
+                    var imageList = Model as IList<Images>;
+                    var images = imageList.Take(4);
+                    var index = 0;
+                }
+                @while (images.Count() > 0)
+                {
+                    var active = index == 0 ? "active" : "";
+
+                    <div class="carousel-item @active">
+                        <div class="row">
+                            @foreach (var image in images)
+                            {
+                                <div class="col-md-3">
+                                    <img class="img-fluid" src="@image.ImageUrl" alt="@image.Name">
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    index++;
+                    images = imageList.Skip(4 * index).Take(4);
+                }
+            </div>
+            <a class="carousel-control-prev" href="#musicSlider" role="button"
+               data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#musicSlider" role="button"
+               data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="false"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+  </div>
+</div>
